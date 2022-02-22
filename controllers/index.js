@@ -64,6 +64,22 @@ const updateUser = async (req, res) =>  {
     }
 }
 
+const deleteUser = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const deleted = await User.destroy({
+            where: { id: id }
+        });
+
+        if(deleted) {
+            return res.status(204).send("User deleted");
+        }
+        throw new Error("User not found");
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
 module.exports = {
     createUser
 }
